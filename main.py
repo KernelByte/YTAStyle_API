@@ -1,8 +1,12 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.security.http import HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
-from typing import Optional
-from jwt_manager import create_token
+from typing import Any, Coroutine, Optional, List
+
+from starlette.requests import Request
+from jwt_manager import create_token, validate_token
+from fastapi.security import HTTPBearer
 
 
 movies = [{
@@ -30,15 +34,22 @@ class Movie(BaseModel):
     title: str = Field(max_length=15, min_length=12, default="titleprueba")
     description: Optional[str] = 'Descripcion'
 
+class JWTBearer(HTTPBearer):
+      async def __call__(self, request: Request):
+            auth = await super().__call__(request)
+            data = validate_token(auth.credentials)
+            if data['email'] != "admin@gmail.com":
+                  raise HTTPException(status_code=403,detail="Credenciales invalidas")
+
 
 @app.get("/", tags=['home'])
 def message():
     return HTMLResponse('<h1>Hola Mundo</h1>')
 
 
-@app.get("/movies", tags=['movies'], status_code=200)
-def get_movies():
-    return JSONResponse(content={"message":"Prueba de mensaje JSON"})
+@app.get("/movies", tags=['movies'], response_model=List[Movie], status_code=200, dependencies=[Depends(JWTBearer())]) 
+def get_movies() -> List[Movie]:
+    return JSONResponse(status_code=200, content=movies) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 @app.post('/movies',tags=['movies'])
 def crear(movie: Movie):
