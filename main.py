@@ -1,6 +1,6 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
+from fastapi import FastAPI, Query
+from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
@@ -23,7 +23,7 @@ app.version = "1.0"
 
 class Movie(BaseModel):
     id:int 
-    title: str
+    title: str = Field(max_length=15, min_length=12, default="titleprueba")
     description: Optional[str] = 'Descripcion'
 
 
@@ -32,9 +32,9 @@ def message():
     return HTMLResponse('<h1>Hola Mundo</h1>')
 
 
-@app.get("/movies", tags=['movies'])
+@app.get("/movies", tags=['movies'], status_code=200)
 def get_movies():
-    return movies
+    return JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 @app.post('/movies',tags=['movies'])
 def crear(movie: Movie):
@@ -43,3 +43,12 @@ def crear(movie: Movie):
             "Titulo": "Tiburon",
             "año": 2023
         })
+
+
+@app.post('/moviesid',tags=['movies'])
+def crear(Titulo: str = Query(min_length=5, max_length=15)):
+        movies.append({
+            "id":3,
+            "Titulo": "Tiburon",
+            "año": 2023
+        })        
