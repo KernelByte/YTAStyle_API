@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional
+from jwt_manager import create_token
 
 
 movies = [{
@@ -20,6 +21,9 @@ app = FastAPI()
 app.title = "API - YTA Style"
 app.version = "1.0"
 
+class User(BaseModel):
+      email: str
+      password: str
 
 class Movie(BaseModel):
     id:int 
@@ -52,3 +56,9 @@ def crear(Titulo: str = Query(min_length=5, max_length=15)):
             "Titulo": "Tiburon",
             "año": 2023
         })        
+
+@app.post("/login", tags=['auth'])
+def login(user: User):
+    #if user.email == "admin@gmail.com" and user.password == "12345":
+        token: str = create_token(user.dict())
+        return JSONResponse(content=token, status_code=200)
