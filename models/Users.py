@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Float, LargeBinary
 
 class User(Base):
     
-    __tablename__ = "Users2"
+    __tablename__ = "Users"
 
     idUser = Column(Integer, primary_key = True)
     nameUser = Column(String)
@@ -13,5 +13,5 @@ class User(Base):
     idRoleUser = Column(Integer)
     tokenUser = Column(String)
     codeReference = Column(String)
-    profilePicture = Column(LargeBinary)
+    #profilePicture = Column(LargeBinary)
     idBusinessUser = Column(Integer)

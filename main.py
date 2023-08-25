@@ -9,7 +9,7 @@ from jwt_manager import create_token, validate_token
 from fastapi.security import HTTPBearer
 
 from config.database import Session, Base, engine
-from models.Users import User
+from models.Users import User as UserModel
 
 movies = [{
     "id":1,
@@ -31,13 +31,19 @@ app.version = "1.0"
 Base.metadata.create_all(bind=engine)
 
 class User(BaseModel):
-      email: str
-      password: str
+      idUser: Optional[int] = None
+      nameUser: str
+      mailUser: str
+      passwordUser: str
+      idRoleUser: int
+      tokenUser: str
+      codeReference: str
+      #profilePicture: bytes
+      idBusinessUser: int
 
-class Movie(BaseModel):
-    id:int 
-    title: str = Field(max_length=15, min_length=12, default="titleprueba")
-    description: Optional[str] = 'Descripcion'
+
+
+
 
 class JWTBearer(HTTPBearer):
       async def __call__(self, request: Request):
@@ -47,14 +53,30 @@ class JWTBearer(HTTPBearer):
                   raise HTTPException(status_code=403,detail="Credenciales invalidas")
 
 
+
+
+
+#Creacion de usuario
+@app.post("/users", tags=['User'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+def create_user(user: User) -> dict:
+    db = Session()
+    new_user = UserModel(**user.dict())
+    db.add(new_user)
+    db.commit()
+    return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+
+
+
+
+'''
+class Movie(BaseModel):
+    id:int 
+    title: str = Field(max_length=15, min_length=12, default="titleprueba")
+    description: Optional[str] = 'Descripcion'
+
 @app.get("/", tags=['home'])
 def message():
     return HTMLResponse('<h1>Hola Mundo</h1>')
-
-
-@app.get("/movies", tags=['movies'], response_model=List[Movie], status_code=200, dependencies=[Depends(JWTBearer())]) 
-def get_movies() -> List[Movie]:
-    return JSONResponse(status_code=200, content=movies) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 @app.post('/movies',tags=['movies'])
 def crear(movie: Movie):
@@ -78,3 +100,5 @@ def login(user: User):
     #if user.email == "admin@gmail.com" and user.password == "12345":
         token: str = create_token(user.dict())
         return JSONResponse(content=token, status_code=200)
+
+'''
