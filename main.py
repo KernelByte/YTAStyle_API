@@ -13,6 +13,7 @@ from config.database import Session, Base, engine
 from models.Users import User as UserModel
 from models.Roles import Role as RolModel
 from models.Business import Busine as BusineModel
+from fastapi.encoders import jsonable_encoder
 
 movies = [{
     "id":1,
@@ -42,7 +43,7 @@ class User(BaseModel):
       tokenUser: str
       codeReference: str
       #profilePicture: bytes
-      idBusinessUser: int
+      idBusinessUser: Optional[int] = None
 
 class Rol(BaseModel):
       idRole: Optional[int] = None
@@ -67,9 +68,10 @@ class JWTBearer(HTTPBearer):
 
 
 
+#CRUD USER #########################################################################
 
-#Creacion de usuario
-@app.post("/users", tags=['User'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+# User creation
+@app.post("/users", tags=['Users'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create_user(user: User) -> dict:
     db = Session()
     new_user = UserModel(**user.dict())
@@ -77,10 +79,49 @@ def create_user(user: User) -> dict:
     db.commit()
     return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
+# Search by user
+@app.get("/users/", tags=['Users'],response_model = User )
+def get_user(id: int) -> User:
+     db = Session()
+     result = db.query(UserModel).filter(UserModel.idUser == id).first()
+     if not result:
+          return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
+     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
+# Search all users
+@app.get("/users", tags=['Users'], response_model=List[User], status_code=200)
+def get_all_user() -> List[User]:
+     db = Session()
+     result = db.query(UserModel).all()
+     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
+# Update Users
+@app.put("/users/", tags=['Users'], response_model=dict, status_code=200)
+def update_user(id: int, user: User) -> dict:
+     db = Session()
+     result = db.query(UserModel).filter(UserModel.idUser == id).first()
+     if not result:
+          return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
+     result.nameUser = user.nameUser
+     result.mailUser = user.mailUser
+     result.idBusinessUser = user.idBusinessUser
+     db.commit()
+
+# Delete Users     
+
+     return JSONResponse(status_code=200, content={"message":"Se ha modificado el usuario"})
+
+
+
+
+
+#######################################################################################
+
+
 
 
 #Creacion de Roles
-@app.post("/roles", tags=['Rol'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+@app.post("/roles", tags=['Roles'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create_rol(rol: Rol) -> dict:
     db = Session()
     new_rol = RolModel(**rol.dict())
