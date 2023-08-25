@@ -1,3 +1,4 @@
+from datetime import date
 from fastapi import FastAPI, Query, HTTPException, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.security.http import HTTPAuthorizationCredentials
@@ -10,6 +11,8 @@ from fastapi.security import HTTPBearer
 
 from config.database import Session, Base, engine
 from models.Users import User as UserModel
+from models.Roles import Role as RolModel
+from models.Business import Busine as BusineModel
 
 movies = [{
     "id":1,
@@ -41,7 +44,16 @@ class User(BaseModel):
       #profilePicture: bytes
       idBusinessUser: int
 
+class Rol(BaseModel):
+      idRole: Optional[int] = None
+      description: str
 
+class Busine(BaseModel):
+    idBusiness : Optional[int] = None
+    nameBusiness : str
+    cellPhone : int
+    Location : str
+    schedule : date
 
 
 
@@ -65,6 +77,27 @@ def create_user(user: User) -> dict:
     db.commit()
     return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
+
+
+#Creacion de Roles
+@app.post("/roles", tags=['Rol'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+def create_rol(rol: Rol) -> dict:
+    db = Session()
+    new_rol = RolModel(**rol.dict())
+    db.add(new_rol)
+    db.commit()
+    return JSONResponse(status_code=201, content={"message": "Rol creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+
+
+
+#Creacion de Business
+@app.post("/business", tags=['Business'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+def create_busine(busine: Busine) -> dict:
+    db = Session()
+    new_busine = BusineModel(**busine.dict())
+    db.add(new_busine)
+    db.commit()
+    return JSONResponse(status_code=201, content={"message": "Business creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 
 
