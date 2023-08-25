@@ -3,11 +3,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-database_url = "postgresql://yta_user:yta20394.0@ServerKernel/yta_style"
-# database_url = f"postgresql:///{os.path.join(base_dir, postgresql_file_name)}"
-
+database_url = "postgresql://postgres:Hack20394@localhost:5432/yta_style"
+# Encargado de interactuar con la base de datos
 engine = create_engine(database_url, echo=True )
+# Encargado de mantener el estado de los elementos
+Session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+# Base para crear los modelos.
 Base = declarative_base()

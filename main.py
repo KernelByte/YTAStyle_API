@@ -8,6 +8,8 @@ from starlette.requests import Request
 from jwt_manager import create_token, validate_token
 from fastapi.security import HTTPBearer
 
+from config.database import Session, Base, engine
+from models.Users import User
 
 movies = [{
     "id":1,
@@ -24,6 +26,9 @@ movies = [{
 app = FastAPI()
 app.title = "API - YTA Style"
 app.version = "1.0"
+
+#Creacion de tablas
+Base.metadata.create_all(bind=engine)
 
 class User(BaseModel):
       email: str
