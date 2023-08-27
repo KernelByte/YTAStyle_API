@@ -45,10 +45,6 @@ class Busine(BaseModel):
 
 
 
-
-
-
-
 #Creacion de Business
 @app.post("/business", tags=['Business'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create_busine(busine: Busine) -> dict:

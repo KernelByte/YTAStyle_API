@@ -6,6 +6,7 @@ from config.database import Session
 from models.Users import User as UserModel
 from fastapi.encoders import jsonable_encoder
 #from middlewares.jwt_bearer import JWTBearer
+from services.Users import UserService
 
 users_router = APIRouter()
 
@@ -35,7 +36,7 @@ def create_user(user: User) -> dict:
 @users_router.get("/users/", tags=['Users'],response_model = User )
 def get_user(id: int) -> User:
      db = Session()
-     result = db.query(UserModel).filter(UserModel.idUser == id).first()
+     result = UserService(db).get_user(id)
      if not result:
           return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
@@ -44,7 +45,7 @@ def get_user(id: int) -> User:
 @users_router.get("/users", tags=['Users'], response_model=List[User], status_code=200)
 def get_all_user() -> List[User]:
      db = Session()
-     result = db.query(UserModel).all()
+     result = UserService(db).get_all_users()
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 # Update Users
