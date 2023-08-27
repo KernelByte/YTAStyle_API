@@ -14,6 +14,7 @@ from models.Users import User as UserModel
 from models.Roles import Role as RolModel
 from models.Business import Busine as BusineModel
 from fastapi.encoders import jsonable_encoder
+from middlewares.error_handler import ErrorHandler
 
 movies = [{
     "id":1,
@@ -30,6 +31,8 @@ movies = [{
 app = FastAPI()
 app.title = "API - YTA Style"
 app.version = "1.0"
+
+app.add_middleware(ErrorHandler)
 
 #Creacion de tablas
 Base.metadata.create_all(bind=engine)
