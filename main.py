@@ -15,7 +15,7 @@ from models.Roles import Role as RolModel
 from models.Business import Busine as BusineModel
 from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
-from middlewares.jwt_bearer import JWTBearer
+#from middlewares.jwt_bearer import JWTBearer
 
 movies = [{
     "id":1,
