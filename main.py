@@ -1,13 +1,13 @@
 from datetime import date
-from fastapi import FastAPI, Query, HTTPException, Depends
+from fastapi import FastAPI, Query, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.security.http import HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
 from typing import Any, Coroutine, Optional, List
 
-from starlette.requests import Request
-from jwt_manager import create_token, validate_token
-from fastapi.security import HTTPBearer
+
+
+
 
 from config.database import Session, Base, engine
 from models.Users import User as UserModel
@@ -15,6 +15,7 @@ from models.Roles import Role as RolModel
 from models.Business import Busine as BusineModel
 from fastapi.encoders import jsonable_encoder
 from middlewares.error_handler import ErrorHandler
+from middlewares.jwt_bearer import JWTBearer
 
 movies = [{
     "id":1,
@@ -61,12 +62,7 @@ class Busine(BaseModel):
 
 
 
-class JWTBearer(HTTPBearer):
-      async def __call__(self, request: Request):
-            auth = await super().__call__(request)
-            data = validate_token(auth.credentials)
-            if data['email'] != "admin@gmail.com":
-                  raise HTTPException(status_code=403,detail="Credenciales invalidas")
+
 
 
 
