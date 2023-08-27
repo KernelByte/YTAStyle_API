@@ -4,11 +4,12 @@ from fastapi.responses import  JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 from config.database import Session, Base, engine
-from models.Roles import Role as RolModel
+
 from models.Business import Busine as BusineModel
 from middlewares.error_handler import ErrorHandler
 #from middlewares.jwt_bearer import JWTBearer
-from routers.Users import user_router
+from routers.Users import users_router
+from routers.Roles import roles_router
 
 movies = [{
     "id":1,
@@ -27,16 +28,13 @@ app.title = "API - YTA Style"
 app.version = "1.0"
 
 app.add_middleware(ErrorHandler)
-app.include_router(user_router)
+app.include_router(users_router)
+app.include_router(roles_router)
 
 #Creacion de tablas
 Base.metadata.create_all(bind=engine)
 
 
-
-class Rol(BaseModel):
-      idRole: Optional[int] = None
-      description: str
 
 class Busine(BaseModel):
     idBusiness : Optional[int] = None
@@ -48,14 +46,6 @@ class Busine(BaseModel):
 
 
 
-#Creacion de Roles
-@app.post("/roles", tags=['Roles'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create_rol(rol: Rol) -> dict:
-    db = Session()
-    new_rol = RolModel(**rol.dict())
-    db.add(new_rol)
-    db.commit()
-    return JSONResponse(status_code=201, content={"message": "Rol creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 
 

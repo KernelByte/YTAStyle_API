@@ -7,7 +7,7 @@ from models.Users import User as UserModel
 from fastapi.encoders import jsonable_encoder
 #from middlewares.jwt_bearer import JWTBearer
 
-user_router = APIRouter()
+users_router = APIRouter()
 
 class User(BaseModel):
       idUser: Optional[int] = None
@@ -23,7 +23,7 @@ class User(BaseModel):
 #CRUD USER #########################################################################
 
 # User creation
-@user_router.post("/users", tags=['Users'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+@users_router.post("/users", tags=['Users'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create_user(user: User) -> dict:
     db = Session()
     new_user = UserModel(**user.dict())
@@ -32,7 +32,7 @@ def create_user(user: User) -> dict:
     return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 # Search by user
-@user_router.get("/users/", tags=['Users'],response_model = User )
+@users_router.get("/users/", tags=['Users'],response_model = User )
 def get_user(id: int) -> User:
      db = Session()
      result = db.query(UserModel).filter(UserModel.idUser == id).first()
@@ -41,14 +41,14 @@ def get_user(id: int) -> User:
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 # Search all users
-@user_router.get("/users", tags=['Users'], response_model=List[User], status_code=200)
+@users_router.get("/users", tags=['Users'], response_model=List[User], status_code=200)
 def get_all_user() -> List[User]:
      db = Session()
      result = db.query(UserModel).all()
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 # Update Users
-@user_router.put("/users/", tags=['Users'], response_model=dict, status_code=200)
+@users_router.put("/users/", tags=['Users'], response_model=dict, status_code=200)
 def update_user(id: int, user: User) -> dict:
      db = Session()
      result = db.query(UserModel).filter(UserModel.idUser == id).first()
@@ -61,7 +61,7 @@ def update_user(id: int, user: User) -> dict:
      return JSONResponse(status_code=200, content={"message":"Se ha modificado el usuario"})
 
 # Delete Users     
-@user_router.delete("/users/", tags=['Users'], response_model=dict, status_code=200)
+@users_router.delete("/users/", tags=['Users'], response_model=dict, status_code=200)
 def delete_user(id: int) -> dict:
      db = Session()
      result = db.query(UserModel).filter(UserModel.idUser == id).first()
