@@ -106,11 +106,19 @@ def update_user(id: int, user: User) -> dict:
      result.mailUser = user.mailUser
      result.idBusinessUser = user.idBusinessUser
      db.commit()
-
-# Delete Users     
-
      return JSONResponse(status_code=200, content={"message":"Se ha modificado el usuario"})
 
+
+# Delete Users     
+@app.delete("/users/", tags=['Users'], response_model=dict, status_code=200)
+def delete_user(id: int) -> dict:
+     db = Session()
+     result = db.query(UserModel).filter(UserModel.idUser == id).first()
+     if not result:
+          return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
+     db.delete(result)
+     db.commit()
+     return JSONResponse(status_code=200, content={"message":"Usuario eliminado"})
 
 
 
