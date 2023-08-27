@@ -4,12 +4,11 @@ from fastapi.responses import  JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 from config.database import Session, Base, engine
-
 from models.Business import Busine as BusineModel
 from middlewares.error_handler import ErrorHandler
 #from middlewares.jwt_bearer import JWTBearer
-from routers.Users import users_router
-from routers.Roles import roles_router
+from routers.UserRouter import users_router
+from routers.RolRouter import roles_router
 
 movies = [{
     "id":1,
@@ -21,7 +20,6 @@ movies = [{
     "Titulo": "avion gris",
     "año": 2021
 }]
-
 
 app = FastAPI()
 app.title = "API - YTA Style"
@@ -42,8 +40,6 @@ class Busine(BaseModel):
     cellPhone : int
     Location : str
     schedule : date
-
-
 
 #Creacion de Business
 @app.post("/business", tags=['Business'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
@@ -73,7 +69,6 @@ def crear(movie: Movie):
             "Titulo": "Tiburon",
             "año": 2023
         })
-
 
 @app.post('/moviesid',tags=['movies'])
 def crear(Titulo: str = Query(min_length=5, max_length=15)):

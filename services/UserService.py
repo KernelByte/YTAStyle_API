@@ -1,6 +1,6 @@
 from models.Users import User as UserModel
 
-class UserService():
+class userService():
     def __init__(self,db) -> None:
         self.db = db
 
