@@ -1,0 +1,18 @@
+import typing
+from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
+from starlette.types import ASGIApp
+from fastapi import FastAPI, Request, Response
+from fastapi.responses import JSONResponse
+
+class ErrorHandler(BaseHTTPMiddleware):
+    
+    # Metodo constructor
+    def __init__(self, app: FastAPI) -> None:
+        super().__init__(app)
+
+   # Metodo dispatch, el cual se estara ejecutando para detectar un error en la app
+    async def dispatch(self, request: Request, call_next) -> Response | JSONResponse:
+        try:
+            return await call_next(request)
+        except Exception as e:
+            return JSONResponse(status_code=500, content={'error': str(e)})
