@@ -1,4 +1,3 @@
-from datetime import date
 from fastapi import FastAPI
 from fastapi.responses import  JSONResponse
 from pydantic import BaseModel
@@ -9,6 +8,7 @@ from middlewares.error_handler import ErrorHandler
 #from middlewares.jwt_bearer import JWTBearer
 from routers.UserRouter import users_router
 from routers.RolRouter import roles_router
+from routers.BusineRouter import business_router
 
 movies = [{
     "id":1,
@@ -28,29 +28,10 @@ app.version = "1.0"
 app.add_middleware(ErrorHandler)
 app.include_router(users_router)
 app.include_router(roles_router)
+app.include_router(business_router)
 
 #Creacion de tablas
 Base.metadata.create_all(bind=engine)
-
-
-
-class Busine(BaseModel):
-    idBusiness : Optional[int] = None
-    nameBusiness : str
-    cellPhone : int
-    Location : str
-    schedule : date
-
-#Creacion de Business
-@app.post("/business", tags=['Business'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create_busine(busine: Busine) -> dict:
-    db = Session()
-    new_busine = BusineModel(**busine.dict())
-    db.add(new_busine)
-    db.commit()
-    return JSONResponse(status_code=201, content={"message": "Business creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
-
-
 
 '''
 class Movie(BaseModel):
