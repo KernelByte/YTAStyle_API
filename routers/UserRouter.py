@@ -1,25 +1,16 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-from typing import  Optional, List
+from typing import  List
 from config.database import Session
 from models.Users import User as UserModel
 from fastapi.encoders import jsonable_encoder
 #from middlewares.jwt_bearer import JWTBearer
 from services.UserService import userService
+from schemas.UserSchema import User
 
 users_router = APIRouter()
 
-class User(BaseModel):
-      idUser: Optional[int] = None
-      nameUser: str
-      mailUser: str
-      passwordUser: str
-      idRoleUser: int
-      tokenUser: str
-      codeReference: str
-      #profilePicture: bytes
-      idBusinessUser: Optional[int] = None
+
 
 #CRUD USER #########################################################################
 
