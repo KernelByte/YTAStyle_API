@@ -51,11 +51,10 @@ def update_user(id: int, user: UserSchema) -> dict:
 @users_router.delete("/users/", tags=['Users'], response_model=dict, status_code=200)
 def delete_user(id: int) -> dict:
      db = Session()
-     result = db.query(UserModel).filter(UserModel.idUser == id).first()
+     result = userService(db).get_user(id)
      if not result:
           return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
-     db.delete(result)
-     db.commit()
+     userService(db).delete_user(id)
      return JSONResponse(status_code=200, content={"message":"Usuario eliminado"})
 
 #######################################################################################

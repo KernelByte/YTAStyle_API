@@ -26,3 +26,8 @@ class userService():
        update_user.mailUser = data.mailUser
        self.db.commit()
        return 
+    
+    def delete_user(self, id: int):
+       self.db.query(UserModel).filter(UserModel.idUser == id).delete()
+       self.db.commit()
+       return 
