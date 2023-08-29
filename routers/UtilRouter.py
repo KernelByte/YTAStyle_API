@@ -3,7 +3,6 @@ from schemas.UserSchema import User as UserSchema
 from util.jwt_manager import create_token
 from fastapi.responses import  JSONResponse
 
-
 auth_router = APIRouter()
 
 @auth_router.post("/login", tags=['auth'])
