@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import  Optional
-from services.UserService import userService
 
 class User(BaseModel):
       idUser: Optional[int] = None

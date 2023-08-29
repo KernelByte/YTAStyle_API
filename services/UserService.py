@@ -1,4 +1,5 @@
 from models.Users import User as UserModel
+from schemas.UserSchema import User as UserSchema
 
 class userService():
     def __init__(self,db) -> None:
@@ -11,3 +12,17 @@ class userService():
     def get_user(self, id):
       result = self.db.query(UserModel).filter(UserModel.idUser == id).first()
       return result
+    
+    def create_user(self, user: UserSchema):
+       new_user = UserModel(**user.dict())
+       self.db.add(new_user)
+       self.db.commit()
+       return
+
+    
+    def update_user(self, id: int, data: UserSchema):
+       update_user =  self.db.query(UserModel).filter(UserModel.idUser == id).first()
+       update_user.nameUser = data.nameUser
+       update_user.mailUser = data.mailUser
+       self.db.commit()
+       return 
