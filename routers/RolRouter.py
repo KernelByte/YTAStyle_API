@@ -7,10 +7,9 @@ from schemas.RoleSchema import Rol as RolSchema
 roles_router = APIRouter()
 
 
-
 #Creacion de Roles
-@roles_router.post("/roles", tags=['Roles'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create_rol(rol: RolSchema) -> dict:
+@roles_router.post("/roles", tags=['ROLES'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+def create(rol: RolSchema) -> dict:
     db = Session()
     new_rol = RolModel(**rol.dict())
     db.add(new_rol)

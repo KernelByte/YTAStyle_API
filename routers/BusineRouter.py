@@ -17,8 +17,8 @@ class Busine(BaseModel):
     schedule : date
 
 #Creacion de Business
-@business_router.post("/business", tags=['Business'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create_busine(busine: Busine) -> dict:
+@business_router.post("/business", tags=['BUSINESS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
+def create(busine: Busine) -> dict:
     db = Session()
     new_busine = BusineModel(**busine.dict())
     db.add(new_busine)
