@@ -1,6 +1,6 @@
 from fastapi.security import HTTPBearer
 from starlette.requests import Request
-from jwt_manager import validate_token
+from util.jwt_manager import validate_token
 from fastapi import  HTTPException
 
 class JWTBearer(HTTPBearer):
