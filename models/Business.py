@@ -1,6 +1,5 @@
 from config.database import Base
 from sqlalchemy import Column, Integer, String, Float, LargeBinary, DateTime
-#from models import Base
 
 class Busine(Base):
     
