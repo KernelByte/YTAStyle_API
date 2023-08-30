@@ -9,6 +9,7 @@ from routers.BusinessRouter import business_router
 from routers.StatusRouter import status_router
 from routers.ProductsRouter import products_router
 from routers.CustomersRouter import customers_router
+from routers.CategoriesRouter import categories_router
 from routers.UtilRouter import auth_router
 
 
@@ -29,6 +30,7 @@ app.include_router(auth_router)
 app.include_router(status_router)
 app.include_router(products_router)
 app.include_router(customers_router)
+app.include_router(categories_router)
 
 # CREATE TABLES
 Base.metadata.create_all(bind=engine)
