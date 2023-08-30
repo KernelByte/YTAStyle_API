@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from typing import  List
 from config.database import Session
-from models.Users import User as UserModel
 from fastapi.encoders import jsonable_encoder
 from services.UserService import userService
 from schemas.UserSchema import User as UserSchema
