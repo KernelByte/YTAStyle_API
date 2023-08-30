@@ -1,5 +1,5 @@
 from config.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, Date, Float
 
 class Buy(Base):
     
@@ -9,7 +9,7 @@ class Buy(Base):
     idCategoryBuy = Column(Integer)
     priceUnitBuy = Column(Float)
     priceBuyTotal = Column(Float)
-    dateBuy = Column(DateTime)
+    dateBuy = Column(Date)
     idPaymentStatus = Column(Integer)
     idCustomerBuy = Column(Integer)
     discount = Column(Float)

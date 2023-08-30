@@ -1,5 +1,5 @@
 from config.database import Base
-from sqlalchemy import Column, Integer, String, Float, LargeBinary, DateTime
+from sqlalchemy import Column, Integer, String, Float, LargeBinary
 
 class Busine(Base):
     
@@ -9,4 +9,4 @@ class Busine(Base):
     nameBusiness = Column(String)
     cellPhone = Column(Integer)
     Location = Column(String)
-    schedule = Column(DateTime)
+    schedule = Column(String)
