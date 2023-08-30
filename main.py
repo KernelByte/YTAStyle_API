@@ -8,6 +8,7 @@ from routers.RolesRouter import roles_router
 from routers.BusinessRouter import business_router
 from routers.StatusRouter import status_router
 from routers.ProductsRouter import products_router
+from routers.CustomersRouter import customers_router
 from routers.UtilRouter import auth_router
 
 
@@ -27,6 +28,7 @@ app.include_router(business_router)
 app.include_router(auth_router)
 app.include_router(status_router)
 app.include_router(products_router)
+app.include_router(customers_router)
 
 # CREATE TABLES
 Base.metadata.create_all(bind=engine)
