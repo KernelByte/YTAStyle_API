@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Float, LargeBinary
 
 class User(Base):
     
-    __tablename__ = "Users"
+    __tablename__ = "Users2"
 
     idUser = Column(Integer, primary_key = True)
     nameUser = Column(String)

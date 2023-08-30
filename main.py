@@ -6,6 +6,7 @@ from middlewares.error_handler import ErrorHandler
 from routers.UserRouter import users_router
 from routers.RolRouter import roles_router
 from routers.BusineRouter import business_router
+from routers.StateRouter import status_router
 from routers.UtilRouter import auth_router
 
 
@@ -22,6 +23,7 @@ app.include_router(users_router)
 app.include_router(roles_router)
 app.include_router(business_router)
 app.include_router(auth_router)
+app.include_router(status_router)
 
 # CREATE TABLES
 Base.metadata.create_all(bind=engine)

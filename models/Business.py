@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Float, LargeBinary, DateTime
 
 class Busine(Base):
     
-    __tablename__ = "Business"
+    __tablename__ = "Business2"
 
     idBusiness = Column(Integer, primary_key = True)
     nameBusiness = Column(String)
