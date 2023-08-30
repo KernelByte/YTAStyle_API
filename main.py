@@ -26,12 +26,12 @@ app.add_middleware(ErrorHandler)
 app.include_router(users_router)
 app.include_router(roles_router)
 app.include_router(business_router)
-app.include_router(auth_router)
 app.include_router(status_router)
 app.include_router(products_router)
 app.include_router(customers_router)
 app.include_router(categories_router)
 app.include_router(buys_router)
+app.include_router(auth_router)
 
 # CREATE TABLES
 Base.metadata.create_all(bind=engine)
