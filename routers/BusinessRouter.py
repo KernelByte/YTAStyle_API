@@ -1,5 +1,5 @@
 from datetime import date
-from models.Business import Busine as BusineModel
+from models.Business import Busine as BusinessModel
 from pydantic import BaseModel
 from typing import Optional
 from config.database import Session
@@ -20,7 +20,7 @@ class Busine(BaseModel):
 @business_router.post("/business", tags=['BUSINESS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create(busine: Busine) -> dict:
     db = Session()
-    new_busine = BusineModel(**busine.dict())
+    new_busine = BusinessModel(**busine.dict())
     db.add(new_busine)
     db.commit()
     return JSONResponse(status_code=201, content={"message": "Business creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})

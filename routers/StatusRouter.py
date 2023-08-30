@@ -2,14 +2,14 @@ from models.Status import State as StateModel
 from config.database import Session
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
-from schemas.StateSchema import State as StateSchema
+from schemas.StateSchema import State as StatusSchema
 
 status_router = APIRouter()
 
 
 #Creacion de State
 @status_router.post("/status", tags=['STATUS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(state: StateSchema) -> dict:
+def create(state: StatusSchema) -> dict:
     db = Session()
     new_state = StateModel(**state.dict())
     db.add(new_state)

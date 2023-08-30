@@ -2,14 +2,14 @@ from models.Roles import Role as RolModel
 from config.database import Session
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
-from schemas.RoleSchema import Rol as RolSchema
+from schemas.RoleSchema import Rol as RolesSchema
 
 roles_router = APIRouter()
 
 
 #Creacion de Roles
 @roles_router.post("/roles", tags=['ROLES'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(rol: RolSchema) -> dict:
+def create(rol: RolesSchema) -> dict:
     db = Session()
     new_rol = RolModel(**rol.dict())
     db.add(new_rol)
