@@ -1,7 +1,3 @@
-from datetime import date
-from models.Buys import Buy as BuysModel
-from pydantic import BaseModel
-from typing import Optional
 from config.database import Session
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
