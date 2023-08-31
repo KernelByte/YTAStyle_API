@@ -1,4 +1,3 @@
-from models.Status import State as StateModel
 from config.database import Session
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
