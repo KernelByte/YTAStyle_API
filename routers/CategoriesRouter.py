@@ -53,4 +53,4 @@ def delete(id: int) -> dict:
      CategoryService(db).delete_category(id)
      return JSONResponse(status_code=200, content={"message":"Categoria eliminada"})
 
-#######################################################################################
+# ######################################################################################
