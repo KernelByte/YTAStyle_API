@@ -31,9 +31,9 @@ def get_all() -> List[UsersSchema]:
 # User creation
 @users_router.post("/users", tags=['USERS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create(user: UsersSchema) -> dict:
-    db = Session()
-    userService(db).create_user(user)
-    return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+     db = Session()
+     userService(db).create_user(user)
+     return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 # Update Users
 @users_router.put("/users/", tags=['USERS'], response_model=dict, status_code=200)
@@ -54,5 +54,15 @@ def delete(id: int) -> dict:
           return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
      userService(db).delete_user(id)
      return JSONResponse(status_code=200, content={"message":"Usuario eliminado"})
+
+# Search by email user
+@users_router.get("/users/", tags=['USERS'],response_model = UsersSchema )
+def get_email(email: int) -> UsersSchema:
+     db = Session()
+     result = userService(db).get_user_email(email)
+     if not result:
+          return JSONResponse(status_code=404, content={"message":"Usuario no encontrado"})
+     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+     #return JSONResponse(status_code=200, content={"success":"true"})
 
 #######################################################################################

@@ -35,3 +35,7 @@ class userService():
        self.db.query(UserModel).filter(UserModel.idUser == id).delete()
        self.db.commit()
        return 
+    
+    def get_user_email(self, email):
+      result = self.db.query(UserModel).filter(UserModel.mailUser == email).first()
+      return result
