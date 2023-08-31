@@ -1,4 +1,4 @@
-from models.Products import Producte as ProductsModel
+from models.Products import Product as ProductsModel
 from schemas.ProductSchema import Product as ProductsSchema
 
 class ProductService():
