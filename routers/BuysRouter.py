@@ -10,7 +10,7 @@ buys_router = APIRouter()
 
 # CRUD ROL #########################################################################
 
-# Search by business
+# Search by buy
 @buys_router.get("/buys/", tags=['BUYS'],response_model = BuysSchema )
 def get(id: int) -> BuysSchema:
      db = Session()
@@ -19,21 +19,21 @@ def get(id: int) -> BuysSchema:
           return JSONResponse(status_code=404, content={"message":"Compra no encontrada"})
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-# Search all business
+# Search all buys
 @buys_router.get("/buys", tags=['BUYS'], response_model=List[BuysSchema], status_code=200)
 def get_all() -> List[BuysSchema]:
      db = Session()
      result = buyService(db).get_all_buys()
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-# Business creation
+# Buy creation
 @buys_router.post("/buys", tags=['BUYS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create(buy: BuysSchema) -> dict:
     db = Session()
     buyService(db).create_buy(buy)
     return JSONResponse(status_code=201, content={"message": "Compra creada correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
-# Update business
+# Update buy
 @buys_router.put("/buys/", tags=['BUYS'], response_model=dict, status_code=200)
 def update(id: int, buy: BuysSchema) -> dict:
      db = Session()
@@ -43,7 +43,7 @@ def update(id: int, buy: BuysSchema) -> dict:
      buyService(db).update_buy(id,buy)
      return JSONResponse(status_code=200, content={"message":"Se ha modificado la Compra"})
 
-# Delete business     
+# Delete buy     
 @buys_router.delete("/buys/", tags=['BUYS'], response_model=dict, status_code=200)
 def delete(id: int) -> dict:
      db = Session()

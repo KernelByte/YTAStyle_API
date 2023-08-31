@@ -4,53 +4,53 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from typing import  List
 from schemas.BusinessSchema import Business as BusinessSchema
+from services.BusinessService import BusinessService as businessService
 
 business_router = APIRouter()
 
-
 # CRUD BUSINESS #########################################################################
 
-# Search by rol
+# Search by business
 @business_router.get("/business/", tags=['BUSINESS'],response_model = BusinessSchema )
 def get(id: int) -> BusinessSchema:
      db = Session()
-     result = rolService(db).get_rol(id)
+     result = businessService(db).get_business(id)
      if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
+          return JSONResponse(status_code=404, content={"message":"Negocio no encontrado"})
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-# Search all roles
+# Search all business
 @business_router.get("/business", tags=['BUSINESS'], response_model=List[BusinessSchema], status_code=200)
 def get_all() -> List[BusinessSchema]:
      db = Session()
-     result = rolService(db).get_all_roles()
+     result = businessService(db).get_all_business()
      return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
-# Rol creation
+# Business creation
 @business_router.post("/business", tags=['BUSINESS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(rol: BusinessSchema) -> dict:
+def create(business: BusinessSchema) -> dict:
     db = Session()
-    rolService(db).create_rol(rol)
-    return JSONResponse(status_code=201, content={"message": "Rol creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+    businessService(db).create_business(business)
+    return JSONResponse(status_code=201, content={"message": "Negocio creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
-# Update Status
+# Update business
 @business_router.put("/business/", tags=['BUSINESS'], response_model=dict, status_code=200)
-def update(id: int, rol: BusinessSchema) -> dict:
+def update(id: int, business: BusinessSchema) -> dict:
      db = Session()
-     result = rolService(db).get_rol(id)
+     result = businessService(db).get_business(id)
      if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
-     rolService(db).update_rol(id,rol)
-     return JSONResponse(status_code=200, content={"message":"Se ha modificado el Rol"})
+          return JSONResponse(status_code=404, content={"message":"Negocio no encontrado"})
+     businessService(db).update_business(id,business)
+     return JSONResponse(status_code=200, content={"message":"Se ha modificado el Negocio"})
 
-# Delete Status     
+# Delete business     
 @business_router.delete("/business/", tags=['BUSINESS'], response_model=dict, status_code=200)
 def delete(id: int) -> dict:
      db = Session()
-     result = rolService(db).get_rol(id)
+     result = businessService(db).get_business(id)
      if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
-     rolService(db).delete_rol(id)
-     return JSONResponse(status_code=200, content={"message":"Rol eliminado"})
+          return JSONResponse(status_code=404, content={"message":"Negocio no encontrado"})
+     businessService(db).delete_business(id)
+     return JSONResponse(status_code=200, content={"message":"Negocio eliminado"})
 
-#######################################################################################
+# ######################################################################################
