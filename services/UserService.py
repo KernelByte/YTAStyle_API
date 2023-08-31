@@ -1,5 +1,6 @@
 from models.Users import User as UserModel
 from schemas.UserSchema import User as UserSchema
+import bcrypt 
 
 class userService():
     def __init__(self,db) -> None:
@@ -14,6 +15,10 @@ class userService():
       return result
    
     def create_user(self, user: UserSchema):
+       pwd = user.passwordUser.encode('utf-8')
+       salt = bcrypt.gensalt()
+       encript = bcrypt.hashpw(pwd,salt)
+       user.passwordUser = encript
        new_user = UserModel(**user.dict())
        self.db.add(new_user)
        self.db.commit()
