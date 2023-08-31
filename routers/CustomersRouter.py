@@ -1,69 +1,56 @@
-from datetime import date
-from models.Customers import Customer as CustomersModel
-from pydantic import BaseModel
-from typing import Optional
 from config.database import Session
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
 from schemas.CustomerSchema import Customer as CustomersSchema
 from fastapi.encoders import jsonable_encoder
 from typing import  List
+from services.CustomersService import CustomerService
 
 customers_router = APIRouter()
 
+# CRUD CUSTOMER #########################################################################
 
-#Creacion de Roles
+# Search by customer
+@customers_router.get("/customers/", tags=['CUSTOMERS'],response_model = CustomersSchema )
+def get(id: int) -> CustomersSchema:
+     db = Session()
+     result = CustomerService(db).get_customer(id)
+     if not result:
+          return JSONResponse(status_code=404, content={"message":"Cliente no encontrado"})
+     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
+# Search all customers
+@customers_router.get("/customers", tags=['CUSTOMERS'], response_model=List[CustomersSchema], status_code=200)
+def get_all() -> List[CustomersSchema]:
+     db = Session()
+     result = CustomerService(db).get_all_customers()
+     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
+# customer creation
 @customers_router.post("/customers", tags=['CUSTOMERS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create(customer: CustomersSchema) -> dict:
     db = Session()
-    new_customer = CustomersModel(**customer.dict())
-    db.add(new_customer)
-    db.commit()
-    return JSONResponse(status_code=201, content={"message": "Cliente creado correctamente!"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+    CustomerService(db).create_customer(customer)
+    return JSONResponse(status_code=201, content={"message": "Cliente creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
-# CRUD ROL #########################################################################
-
-# Search by rol
-@roles_router.get("/roles/", tags=['ROLES'],response_model = RolesSchema )
-def get(id: int) -> RolesSchema:
+# Update customer
+@customers_router.put("/customers/", tags=['CUSTOMERS'], response_model=dict, status_code=200)
+def update(id: int, customer: CustomersSchema) -> dict:
      db = Session()
-     result = rolService(db).get_rol(id)
+     result = CustomerService(db).get_customer(id)
      if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
-     return JSONResponse(status_code=200, content=jsonable_encoder(result))
+          return JSONResponse(status_code=404, content={"message":"Cliente no encontrado"})
+     CustomerService(db).update_customer(id,customer)
+     return JSONResponse(status_code=200, content={"message":"Se ha modificado el Cliente"})
 
-# Search all roles
-@roles_router.get("/roles", tags=['ROLES'], response_model=List[RolesSchema], status_code=200)
-def get_all() -> List[RolesSchema]:
-     db = Session()
-     result = rolService(db).get_all_roles()
-     return JSONResponse(status_code=200, content=jsonable_encoder(result))
-
-# Rol creation
-@roles_router.post("/roles", tags=['ROLES'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(rol: RolesSchema) -> dict:
-    db = Session()
-    rolService(db).create_rol(rol)
-    return JSONResponse(status_code=201, content={"message": "Rol creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
-
-# Update Status
-@roles_router.put("/roles/", tags=['ROLES'], response_model=dict, status_code=200)
-def update(id: int, rol: RolesSchema) -> dict:
-     db = Session()
-     result = rolService(db).get_rol(id)
-     if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
-     rolService(db).update_rol(id,rol)
-     return JSONResponse(status_code=200, content={"message":"Se ha modificado el Rol"})
-
-# Delete Status     
-@roles_router.delete("/roles/", tags=['ROLES'], response_model=dict, status_code=200)
+# Delete customer     
+@customers_router.delete("/customers/", tags=['CUSTOMERS'], response_model=dict, status_code=200)
 def delete(id: int) -> dict:
      db = Session()
-     result = rolService(db).get_rol(id)
+     result = CustomerService(db).get_customer(id)
      if not result:
-          return JSONResponse(status_code=404, content={"message":"Rol no encontrado"})
-     rolService(db).delete_rol(id)
-     return JSONResponse(status_code=200, content={"message":"Rol eliminado"})
+          return JSONResponse(status_code=404, content={"message":"Cliente no encontrado"})
+     CustomerService(db).delete_customer(id)
+     return JSONResponse(status_code=200, content={"message":"Cliente eliminado"})
 
 #######################################################################################
