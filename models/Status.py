@@ -11,3 +11,4 @@ class State(Base):
     description = Column(String)
 
     Buys = relationship("Buys", back_populates="owner")
+    Products = relationship("Products", back_populates="owner")
