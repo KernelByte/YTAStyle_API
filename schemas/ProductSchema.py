@@ -14,3 +14,13 @@ class Product(BaseModel):
       color: str
       description: str
       barcode: str
+
+      model_config = {
+            "json_schema_extra": {
+                  "examples": [
+                        {
+                        
+                        }
+                  ]
+            }
+      }

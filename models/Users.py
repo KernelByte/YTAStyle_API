@@ -1,6 +1,6 @@
 from config.database import Base
 from sqlalchemy import Column, Integer, String, Float, LargeBinary,ForeignKey
-#from models import Base
+from sqlalchemy.orm import relationship
 
 class User(Base):
     
@@ -15,3 +15,5 @@ class User(Base):
     codeReference = Column(String)
     #profilePicture = Column(LargeBinary)
     idBusinessUser = Column(Integer)
+
+    owner = relationship("Roles", back_populates="Users")

@@ -11,3 +11,20 @@ class User(BaseModel):
       codeReference: str
       #profilePicture: bytes
       idBusinessUser: Optional[int] = None
+
+      model_config = {
+            "json_schema_extra": {
+                  "examples": [
+                        {
+                        "nameUser": "Oscar Lopez",
+                        "mailUser": "oca2394@gmail.com",
+                        "passwordUser": "12345",
+                        "idRoleUser": None,
+                        "tokenUser": None,
+                        "codeReference": None,
+                        #profilePicture: bytes
+                        "idBusinessUser": 1,
+                        }
+                  ]
+            }
+      }

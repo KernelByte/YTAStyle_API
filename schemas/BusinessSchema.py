@@ -9,3 +9,13 @@ class Business(BaseModel):
       cellPhone: int
       Location: str
       schedule: date
+
+      model_config = {
+            "json_schema_extra": {
+                  "examples": [
+                        {
+                        
+                        }
+                  ]
+            }
+      }

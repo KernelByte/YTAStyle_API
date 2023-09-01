@@ -10,3 +10,13 @@ class Customer(BaseModel):
       address: str
       email: str
       observation: str
+
+      model_config = {
+            "json_schema_extra": {
+                  "examples": [
+                        {
+                        
+                        }
+                  ]
+            }
+      }

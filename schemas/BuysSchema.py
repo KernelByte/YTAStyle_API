@@ -15,3 +15,13 @@ class Buy(BaseModel):
       TypeDiscount: str
       quantityBuy: int
       paymentType: str
+
+      model_config = {
+            "json_schema_extra": {
+                  "examples": [
+                        {
+                        
+                        }
+                  ]
+            }
+      }
