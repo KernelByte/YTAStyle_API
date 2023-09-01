@@ -18,7 +18,7 @@ class userService():
        pwd = user.passwordUser.encode('utf-8')
        salt = bcrypt.gensalt()
        encript = bcrypt.hashpw(pwd,salt)
-       user.passwordUser = encript
+       user.passwordUser = encript.decode('utf-8')
        new_user = UserModel(**user.dict())
        self.db.add(new_user)
        self.db.commit()
