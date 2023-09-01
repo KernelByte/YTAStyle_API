@@ -1,5 +1,6 @@
 from config.database import Base
-from sqlalchemy import Column, Integer, String, Date, Float
+from sqlalchemy import Column, Integer, String, Date, Float, ForeignKey
+from sqlalchemy.orm import relationship
 
 class Buy(Base):
     
@@ -11,8 +12,10 @@ class Buy(Base):
     priceBuyTotal = Column(Float)
     dateBuy = Column(Date)
     idPaymentStatus = Column(Integer)
-    idCustomerBuy = Column(Integer)
+    idCustomerBuy = Column(Integer,ForeignKey("Customers.idCustomer"))
     discount = Column(Float)
     TypeDiscount = Column(String)
     quantityBuy = Column(Integer)
     paymentType = Column(String)
+
+    owner = relationship("Customers", back_populates="Buys")
