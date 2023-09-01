@@ -1,5 +1,6 @@
 from config.database import Base
 from sqlalchemy import Column, Integer, String, Float, LargeBinary
+from sqlalchemy.orm import relationship
 
 class Busine(Base):
     
@@ -10,3 +11,5 @@ class Busine(Base):
     cellPhone = Column(Integer)
     Location = Column(String)
     schedule = Column(String)
+
+    Users = relationship("Users", back_populates="owner")

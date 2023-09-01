@@ -14,6 +14,7 @@ class User(Base):
     tokenUser = Column(String)
     codeReference = Column(String)
     #profilePicture = Column(LargeBinary)
-    idBusinessUser = Column(Integer)
+    idBusinessUser = Column(Integer,ForeignKey("Business.idBusiness"))
 
     owner = relationship("Roles", back_populates="Users")
+    owner = relationship("Business", back_populates="Users")
