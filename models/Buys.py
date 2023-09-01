@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Date, Float
 
 class Buy(Base):
     
-    __tablename__ = "Buys2"
+    __tablename__ = "Buys"
 
     idBuy = Column(Integer, primary_key = True)
     idCategoryBuy = Column(Integer)

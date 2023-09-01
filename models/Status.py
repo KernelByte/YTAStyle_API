@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String
 
 class State(Base):
     
-    __tablename__ = "Status2"
+    __tablename__ = "Status"
 
     idStatus = Column(Integer, primary_key = True)
     categoryStatus = Column(String)

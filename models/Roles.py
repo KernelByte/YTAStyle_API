@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Float, LargeBinary
 
 class Role(Base):
     
-    __tablename__ = "Roles2"
+    __tablename__ = "Roles"
 
     idRole = Column(Integer, primary_key = True)
     description = Column(String)
