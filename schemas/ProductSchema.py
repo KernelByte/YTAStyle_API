@@ -19,7 +19,15 @@ class Product(BaseModel):
             "json_schema_extra": {
                   "examples": [
                         {
-                        
+                              "nameProduct" : "Corbata clasica",
+                              "dateProduct" : "02/09/2023",
+                              "quantity" : 1,
+                              "priceCost" : 15000,
+                              "idCategoryProduct" : None,
+                              "idStatusProduct" : None,
+                              "color" : "Rojo",
+                              "description" : "Corbata de rayas diagonales",
+                              "barcode" : None,
                         }
                   ]
             }
