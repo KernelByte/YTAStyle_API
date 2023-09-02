@@ -8,7 +8,7 @@ class Product(Base):
 
     idProduct = Column(Integer, primary_key = True)
     nameProduct = Column(String)
-    dateProduct = Column(Date)
+    dateProduct = Column(String)
     quantity = Column(Integer)
     priceCost = Column(Float)
     priceBuy  = Column(Float)

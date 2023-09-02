@@ -1,5 +1,6 @@
 from models.Products import Product as ProductsModel
 from schemas.ProductSchema import Product as ProductsSchema
+from datetime import datetime
 
 class ProductService():
     def __init__(self,db) -> None:
