@@ -10,7 +10,7 @@ class Categori(BaseModel):
             "json_schema_extra": {
                   "examples": [
                         {
-                        
+                              "description": ""
                         }
                   ]
             }

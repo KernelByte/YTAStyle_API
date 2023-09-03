@@ -9,4 +9,4 @@ class Role(Base):
     idRole = Column(Integer, primary_key = True)
     description = Column(String)
 
-    Users = relationship("Users", back_populates="owner")
+    #Users = relationship("Users", back_populates="owner")

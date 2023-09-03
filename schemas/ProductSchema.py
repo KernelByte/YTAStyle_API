@@ -9,11 +9,11 @@ class Product(BaseModel):
       quantity: int
       priceCost: float
       priceBuy:  float
-      idCategoryProduct: int
-      idStatusProduct: int
+      idCategoryProduct: Optional[int] = None
+      idStatusProduct: Optional[int] = None
       color: str
       description: str
-      barcode: str
+      barcode: Optional[str] = None
 
       model_config = {
             "json_schema_extra": {
@@ -23,8 +23,9 @@ class Product(BaseModel):
                               "dateProduct" : "02/09/2023",
                               "quantity" : 1,
                               "priceCost" : 15000,
-                              "idCategoryProduct" : None,
-                              "idStatusProduct" : None,
+                              "priceBuy" : 25000,
+                              "idCategoryProduct" : 0,
+                              "idStatusProduct" : 0,
                               "color" : "Rojo",
                               "description" : "Corbata de rayas diagonales",
                               "barcode" : None,

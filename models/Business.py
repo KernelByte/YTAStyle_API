@@ -12,4 +12,4 @@ class Busine(Base):
     Location = Column(String)
     schedule = Column(String)
 
-    Users = relationship("Users", back_populates="owner")
+    #Users = relationship("Users", back_populates="owner")

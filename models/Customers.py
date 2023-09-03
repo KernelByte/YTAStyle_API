@@ -13,4 +13,4 @@ class Customer(Base):
     email = Column(String)
     observation = Column(String)
 
-    Buys = relationship("Buys", back_populates="owner")
+    #Buys = relationship("Buys", back_populates="owner")

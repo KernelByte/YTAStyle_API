@@ -1,6 +1,7 @@
 from config.database import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from models.Buys import Buy
 
 class Category(Base):
     
@@ -9,5 +10,5 @@ class Category(Base):
     idCategory = Column(Integer, primary_key = True)
     description = Column(String)
 
-    Buys = relationship("Buys", back_populates="owner")
-    Products = relationship("Products", back_populates="owner")
+   #Buys = Base.relationship("Buys", back_populates="Categories")
+    #Products = relationship("Products", back_populates="Categories")
