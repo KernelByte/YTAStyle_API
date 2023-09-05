@@ -11,9 +11,9 @@ class User(Base):
     mailUser = Column(String)
     passwordUser = Column(String)
     idRoleUser = Column(Integer,ForeignKey("Roles.idRole"),nullable=True)
-    tokenUser = Column(String)
-    codeReference = Column(String)
-    profilePicture = Column(LargeBinary)
+    tokenUser = Column(String,nullable=True)
+    codeReference = Column(String,nullable=True)
+    #profilePicture = Column(LargeBinary)
     idBusinessUser = Column(Integer,ForeignKey("Business.idBusiness"),nullable=True)
 
     #roles = relationship("Role")

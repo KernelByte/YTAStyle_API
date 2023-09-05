@@ -36,6 +36,6 @@ class userService():
        self.db.commit()
        return 
     
-    def get_user_email(self, email):
+    def get_user_email(self, email: str):
       result = self.db.query(UserModel).filter(UserModel.mailUser == email).first()
       return result

@@ -57,7 +57,7 @@ def delete(id: int) -> dict:
 
 # Search by email user
 @users_router.get("/users/", tags=['USERS'],response_model = UsersSchema )
-def get_email(email: int) -> UsersSchema:
+def get_email(email: str) -> UsersSchema:
      db = Session()
      result = userService(db).get_user_email(email)
      if not result:

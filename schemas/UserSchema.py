@@ -18,12 +18,7 @@ class User(BaseModel):
                         {
                         "nameUser": "Oscar Lopez",
                         "mailUser": "oca2394@gmail.com",
-                        "passwordUser": "12345",
-                        "idRoleUser": None,
-                        "tokenUser": None,
-                        "codeReference": None,
-                        #profilePicture: bytes
-                        "idBusinessUser": 1,
+                        "passwordUser": "12345"
                         }
                   ]
             }

@@ -10,6 +10,24 @@ import bcrypt
 auth_router = APIRouter()
 
 @auth_router.post("/login", tags=['AUTH'])
+def login(mail: str, password: str) :
+        # Consultar si el mail existe en la base de datos
+        db = Session()
+        result = userService(db).get_user_email(mail)
+
+        if not result:
+            return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+        else:
+            pwd = result.passwordUser.encode('utf-8')
+            pas = password.encode('utf-8')
+    
+            if bcrypt.checkpw(pas,pwd):
+                token: str = create_token(jsonable_encoder(result))
+                result.passwordUser = None
+                return JSONResponse(content={"success":"true", "data": {"user":jsonable_encoder(result),"jwt":token}}, status_code=200)
+            else:
+               return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+'''
 def login(data: AuthSchema):
 
     # Consultar si el mail existe en la base de datos
@@ -28,3 +46,4 @@ def login(data: AuthSchema):
             return JSONResponse(content={"success":"true", "data": {"user":jsonable_encoder(data),"jwt":token}}, status_code=200)
         else:
             return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+            '''
