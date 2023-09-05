@@ -6,9 +6,9 @@ class User(BaseModel):
       nameUser: str
       mailUser: str
       passwordUser: str
-      idRoleUser: int
-      tokenUser: str
-      codeReference: str
+      idRoleUser: Optional[int] = None
+      tokenUser: Optional[str] = None
+      codeReference: Optional[str] = None
       #profilePicture: bytes
       idBusinessUser: Optional[int] = None
 
