@@ -33,7 +33,7 @@ def get_all() -> List[UsersSchema]:
 def create(user: UsersSchema) -> dict:
      db = Session()
      userService(db).create_user(user)
-     return JSONResponse(status_code=201, content={"message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+     return JSONResponse(status_code=201, content={"success":True, "message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 # Update Users
 @users_router.put("/users/", tags=['USERS'], response_model=dict, status_code=200)
