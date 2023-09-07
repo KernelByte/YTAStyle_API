@@ -16,7 +16,7 @@ def login(mail: str, password: str) :
         result = userService(db).get_user_email(mail)
 
         if not result:
-            return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+            return JSONResponse(content=None, status_code=200)
         else:
             pwd = result.passwordUser.encode('utf-8')
             pas = password.encode('utf-8')
@@ -26,7 +26,7 @@ def login(mail: str, password: str) :
                 result.passwordUser = None
                 return JSONResponse(content={"success":"true", "data": {"user":jsonable_encoder(result),"jwt":token}}, status_code=200)
             else:
-               return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+               return JSONResponse(content={"success":False, "data": {"user":{ "mailUser": None,"passwordUser": None,"idUser": None,"idRoleUser": None,"nameUser": None,"tokenUser": None,"idBusinessUser": None,"codeReference": None},"jwt":None}}, status_code=200)
 '''
 def login(data: AuthSchema):
 
