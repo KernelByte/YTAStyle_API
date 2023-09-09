@@ -24,7 +24,7 @@ def login(mail: str, password: str) :
             if bcrypt.checkpw(pas,pwd):
                 token: str = create_token(jsonable_encoder(result))
                 result.passwordUser = None
-                return JSONResponse(content={"success":"true", "data": {"user":jsonable_encoder(result),"jwt":token}}, status_code=200)
+                return JSONResponse(content={"success":True, "data": {"user":jsonable_encoder(result),"jwt":token}}, status_code=200)
             else:
                return JSONResponse(content={"success":False, "data": {"user":{ "mailUser": None,"passwordUser": None,"idUser": None,"idRoleUser": None,"nameUser": None,"tokenUser": None,"idBusinessUser": None,"codeReference": None},"jwt":None}}, status_code=200)
 '''
