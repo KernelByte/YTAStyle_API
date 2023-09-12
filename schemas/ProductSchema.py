@@ -12,6 +12,7 @@ class Product(BaseModel):
       idCategoryProduct: Optional[int] = None
       idStatusProduct: Optional[int] = None
       color: str
+      productImage: str
       description: str
       barcode: Optional[str] = None
 
@@ -27,6 +28,7 @@ class Product(BaseModel):
                               "idCategoryProduct" : 0,
                               "idStatusProduct" : 0,
                               "color" : "Rojo",
+                              "productImage": None,
                               "description" : "Corbata de rayas diagonales",
                               "barcode" : None,
                         }

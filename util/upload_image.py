@@ -1,4 +1,5 @@
 from os import getcwd
+import os
 from PIL import Image
 from fastapi import  UploadFile, File, BackgroundTasks
 
@@ -12,8 +13,14 @@ async def upload_file(background_task : BackgroundTasks, file:UploadFile = File(
          myfile.close()
       
       background_task.add_task(resize_image,filename=file.filename)
-      nombre_archivo : str = PATH_FILES + file.filename
-      return nombre_archivo
+
+      # Genera un nombre de archivo único para la imagen
+      image_extension = file.filename.split(".")[-1]
+      image_name = f"{file.filename}_image.{image_extension}"
+      image_path = os.path.join(PATH_FILES, image_name)
+
+      
+      return image_path
 
 
 def resize_image(filename: str):

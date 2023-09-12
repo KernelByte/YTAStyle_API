@@ -6,9 +6,11 @@ from fastapi.encoders import jsonable_encoder
 from typing import  List
 from services.ProductsService import ProductService
 from schemas.ProductSchema import Product as ProductsSchema
+#from util.upload_image import upload_file
+from os import getcwd
 
 products_router = APIRouter()
-
+PATH_FILES = getcwd() + "/image/"
 
 # CRUD PRODUCT #########################################################################
 
@@ -30,36 +32,44 @@ def get_all() -> List[ProductSchema]:
 
 # Product creation
 @products_router.post("/products", tags=['PRODUCTS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(
+async def create(
     nameProduct: str = Form(...),
     dateProduct: str = Form(...),
     quantity: int = Form(...),
-    priceCost: float = Form(None),
+    priceCost: float = Form(0),
     priceBuy: float = Form(...),
-    color: str = Form(None),
+    color: str = Form(""),
     productImage: UploadFile = File(None),
     idCategoryProduct: int = Form(None),
     idStatusProduct: int = Form(None),
-    description: str = Form(None),
-    barcode: str = Form(None)) -> dict:
+    description: str = Form(""),
+    barcode: str = Form("")) -> dict:
 
-    new_product = ProductsSchema(
+     with open(PATH_FILES + productImage.filename, "wb") as myfile:
+         content = await productImage.read()
+         myfile.write(content)
+         myfile.close()
+
+     nombre_imagen = productImage.filename
+    #nombre_imagen =  await upload_file(productImage)
+
+     new_product = ProductsSchema(
         nameProduct=nameProduct,
         dateProduct=dateProduct,
         quantity=quantity,
         priceCost=priceCost,
         priceBuy=priceBuy,
         color=color,
-        productImage=productImage,
+        productImage=nombre_imagen,
         idCategoryProduct=idCategoryProduct,
         idStatusProduct=idStatusProduct,
         description=description,
         barcode=barcode
     )
 
-    db = Session()
-    ProductService(db).create_product(new_product)
-    return JSONResponse(status_code=201, content={"message": "Producto creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+     db = Session()
+     ProductService(db).create_product(new_product)
+     return JSONResponse(status_code=201, content={"message": "Producto registrado"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 # Update product
 @products_router.put("/products/", tags=['PRODUCTS'], response_model=dict, status_code=200)
