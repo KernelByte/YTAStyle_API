@@ -9,6 +9,7 @@ import bcrypt
 
 auth_router = APIRouter()
 
+'''
 @auth_router.post("/login", tags=['AUTH'])
 def login(mail: str, password: str) :
         # Consultar si el mail existe en la base de datos
@@ -28,6 +29,8 @@ def login(mail: str, password: str) :
             else:
                return JSONResponse(content={"success":False, "data": {"user":{ "mailUser": None,"passwordUser": None,"idUser": None,"idRoleUser": None,"nameUser": None,"tokenUser": None,"idBusinessUser": None,"codeReference": None},"jwt":None}}, status_code=200)
 '''
+
+@auth_router.post("/login", tags=['AUTH'])
 def login(data: AuthSchema):
 
     # Consultar si el mail existe en la base de datos
@@ -35,7 +38,7 @@ def login(data: AuthSchema):
     result = userService(db).get_user_email(data.mailUser)
 
     if not result:
-        return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
+        return JSONResponse(content={"success":False, "data": {"user":{ "mailUser": None,"passwordUser": None,"idUser": None,"idRoleUser": None,"nameUser": None,"tokenUser": None,"idBusinessUser": None,"codeReference": None},"jwt":None}}, status_code=200)
     else:
         pwd = result.passwordUser.encode('utf-8')
         pas = data.passwordUser.encode('utf-8')
@@ -43,7 +46,7 @@ def login(data: AuthSchema):
         if bcrypt.checkpw(pas,pwd):
             token: str = create_token(data.dict())
             data.passwordUser = None
-            return JSONResponse(content={"success":"true", "data": {"user":jsonable_encoder(data),"jwt":token}}, status_code=200)
+            return JSONResponse(content={"success":True, "data": {"user":jsonable_encoder(result),"jwt":token}}, status_code=200)
         else:
-            return JSONResponse(status_code=404, content={"message":"Usuario o contraseña invalidos"})
-            '''
+            return JSONResponse(content={"success":False, "data": {"user":{ "mailUser": None,"passwordUser": None,"idUser": None,"idRoleUser": None,"nameUser": None,"tokenUser": None,"idBusinessUser": None,"codeReference": None},"jwt":None}}, status_code=200)
+            
