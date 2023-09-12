@@ -1,10 +1,11 @@
 from config.database import Session
 from fastapi.responses import JSONResponse
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile, Form
 from schemas.ProductSchema import Product as ProductSchema
 from fastapi.encoders import jsonable_encoder
 from typing import  List
 from services.ProductsService import ProductService
+from schemas.ProductSchema import Product as ProductsSchema
 
 products_router = APIRouter()
 
@@ -29,9 +30,35 @@ def get_all() -> List[ProductSchema]:
 
 # Product creation
 @products_router.post("/products", tags=['PRODUCTS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
-def create(product: ProductSchema) -> dict:
+def create(
+    nameProduct: str = Form(...),
+    dateProduct: str = Form(...),
+    quantity: int = Form(...),
+    priceCost: float = Form(None),
+    priceBuy: float = Form(...),
+    color: str = Form(None),
+    productImage: UploadFile = File(None),
+    idCategoryProduct: int = Form(None),
+    idStatusProduct: int = Form(None),
+    description: str = Form(None),
+    barcode: str = Form(None)) -> dict:
+
+    new_product = ProductsSchema(
+        nameProduct=nameProduct,
+        dateProduct=dateProduct,
+        quantity=quantity,
+        priceCost=priceCost,
+        priceBuy=priceBuy,
+        color=color,
+        productImage=productImage,
+        idCategoryProduct=idCategoryProduct,
+        idStatusProduct=idStatusProduct,
+        description=description,
+        barcode=barcode
+    )
+
     db = Session()
-    ProductService(db).create_product(product)
+    ProductService(db).create_product(new_product)
     return JSONResponse(status_code=201, content={"message": "Producto creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
 
 # Update product

@@ -15,7 +15,7 @@ class Product(Base):
     idCategoryProduct = Column(Integer,ForeignKey("Categories.idCategory"),nullable=True)
     idStatusProduct = Column(Integer,ForeignKey("Status.idStatus"),nullable=True)
     color = Column(String)
-    #productImage = Column()
+    productImage = Column(String)
     description = Column(String)
     barcode = Column(String)
 
