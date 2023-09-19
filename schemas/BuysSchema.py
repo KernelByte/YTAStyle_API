@@ -11,6 +11,7 @@ class Buy(BaseModel):
       dateBuy: date
       idPaymentStatus: int
       idCustomerBuy: int
+      idBusinessBuy: Optional[int] = None
       discount: float
       TypeDiscount: str
       quantityBuy: int

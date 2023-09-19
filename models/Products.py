@@ -13,6 +13,7 @@ class Product(Base):
     priceCost = Column(Float)
     priceBuy  = Column(Float)
     idCategoryProduct = Column(Integer,ForeignKey("Categories.idCategory"),nullable=True)
+    idBusinessProduct = Column(Integer,ForeignKey("Business.idBusiness"),nullable=True)
     idStatusProduct = Column(Integer,ForeignKey("Status.idStatus"),nullable=True)
     color = Column(String)
     productImage = Column(String)

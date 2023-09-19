@@ -4,6 +4,7 @@ from typing import Optional
 class Categori(BaseModel):
       
       idCategory: Optional[int] = None
+      idBusinessCategory: Optional[int] = None
       description: str
 
       model_config = {

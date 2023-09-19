@@ -9,6 +9,7 @@ class Customer(BaseModel):
       cellPhoneCustomer: int
       address: str
       email: str
+      idBusinessCustomer: Optional[int] = None
       observation: str
 
       model_config = {

@@ -13,6 +13,7 @@ class Buy(Base):
     dateBuy = Column(Date)
     idPaymentStatus = Column(Integer,ForeignKey("Status.idStatus"),nullable=True)
     idCustomerBuy = Column(Integer,ForeignKey("Customers.idCustomer"),nullable=True)
+    idBusinessBuy = Column(Integer,ForeignKey("Business.idBusiness"),nullable=True)
     discount = Column(Float)
     TypeDiscount = Column(String)
     quantityBuy = Column(Integer)

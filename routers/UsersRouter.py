@@ -32,8 +32,12 @@ def get_all() -> List[UsersSchema]:
 @users_router.post("/users", tags=['USERS'], response_model=dict, status_code=201) #, dependencies=[Depends(JWTBearer())] 
 def create(user: UsersSchema) -> dict:
      db = Session()
-     userService(db).create_user(user)
-     return JSONResponse(status_code=201, content={"success":True, "message": "Usuario creado correctamente"}) #JSONResponse(content={"message":"Prueba de mensaje JSON"})
+     result = userService(db).get_user_email(user.mailUser)
+     if not result:
+          userService(db).create_user(user)
+          return JSONResponse(status_code=201, content={"success":True, "message": "Usuario creado correctamente"})
+     else:
+          return JSONResponse(status_code=201, content={"success":False, "message": "Ya existe un usuario con este correo electronico, inicia sesion"})
 
 # Update Users
 @users_router.put("/users/", tags=['USERS'], response_model=dict, status_code=200)

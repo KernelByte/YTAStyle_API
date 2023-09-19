@@ -1,5 +1,5 @@
 from config.database import Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String,ForeignKey
 from sqlalchemy.orm import relationship
 
 class State(Base):
@@ -8,6 +8,7 @@ class State(Base):
 
     idStatus = Column(Integer, primary_key = True)
     categoryStatus = Column(String)
+    idBussinesState = Column(Integer,ForeignKey("Business.idBusiness"),nullable=True)
     description = Column(String)
 
     #Buys = relationship("Buys", back_populates="owner")

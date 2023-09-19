@@ -10,6 +10,7 @@ class Product(BaseModel):
       priceCost: float
       priceBuy:  float
       idCategoryProduct: Optional[int] = None
+      idBusinessProduct: Optional[int] = None
       idStatusProduct: Optional[int] = None
       color: str
       productImage: str
@@ -26,6 +27,7 @@ class Product(BaseModel):
                               "priceCost" : 15000,
                               "priceBuy" : 25000,
                               "idCategoryProduct" : 0,
+                              "idBusinessProduct": 0,
                               "idStatusProduct" : 0,
                               "color" : "Rojo",
                               "productImage": None,
