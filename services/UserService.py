@@ -28,6 +28,7 @@ class userService():
        update_user =  self.db.query(UserModel).filter(UserModel.idUser == id).first()
        update_user.nameUser = data.nameUser
        update_user.mailUser = data.mailUser
+       update_user.tokenUser = data.tokenUser
        self.db.commit()
        return 
     
